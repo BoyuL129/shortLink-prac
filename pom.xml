@@ -7,6 +7,12 @@
     <groupId>org.example</groupId>
     <artifactId>shortLink</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>admin</module>
+        <module>project</module>
+        <module>gateway</module>
+    </modules>
 
     <properties>
         <java.version>17</java.version>
@@ -83,7 +89,7 @@
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
-                <version>${hutool-all.version}</version>
+                <version>5.8.28</version>
             </dependency>
 
             <dependency>
@@ -97,6 +103,14 @@
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.30</version>
+            </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 
