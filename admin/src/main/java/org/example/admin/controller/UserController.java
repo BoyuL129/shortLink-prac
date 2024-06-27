@@ -5,7 +5,10 @@ package org.example.admin.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.admin.common.convention.result.Result;
 import org.example.admin.common.convention.result.Results;
+import org.example.admin.dto.req.UserLoginReqDTO;
 import org.example.admin.dto.req.UserRegisterReqDTO;
+import org.example.admin.dto.req.UserUpdateReqDTO;
+import org.example.admin.dto.res.UserLoginResDTO;
 import org.example.admin.dto.res.UserResDTO;
 import org.example.admin.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -40,5 +43,22 @@ public class UserController {
     public Result<Void> register(@RequestBody UserRegisterReqDTO requestParam) {
         userService.Register(requestParam);
         return Results.success();
+    }
+
+    @PutMapping("/api/short-link/v1/user")
+    public Result<Void> update(@RequestBody UserUpdateReqDTO requestParam) {
+        userService.update(requestParam);
+        return Results.success();
+    }
+
+    @PostMapping("/api/short-link/v1/user/login")
+    public Result<UserLoginResDTO> login(@RequestBody UserLoginReqDTO requestParam) {
+        return Results.success(userService.login(requestParam));
+    }
+
+
+    @GetMapping("/api/short-link/v1/user/check-login")
+    public Result<Boolean> checkLogin(@RequestParam("username") String username, @RequestParam("token") String token) {
+        return Results.success(userService.checkLogin(username, token));
     }
 }
