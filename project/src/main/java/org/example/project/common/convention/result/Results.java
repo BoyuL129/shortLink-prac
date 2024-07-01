@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-package org.example.admin.common.convention.result;
+package org.example.project.common.convention.result;
 
 
-import org.example.admin.common.convention.errorcode.BaseErrorCode;
-import org.example.admin.common.convention.exception.AbstractException;
+import org.example.project.common.convention.errorcode.BaseErrorCode;
+import org.example.project.common.convention.exception.AbstractException;
 
 import java.util.Optional;
 

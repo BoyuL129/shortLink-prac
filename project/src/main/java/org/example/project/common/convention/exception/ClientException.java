@@ -15,33 +15,39 @@
  * limitations under the License.
  */
 
-package org.example.admin.common.convention.exception;
+package org.example.project.common.convention.exception;
 
 
-import lombok.Getter;
-import org.example.admin.common.convention.errorcode.IErrorCode;
-import org.springframework.util.StringUtils;
-
-import java.util.Optional;
+import org.example.project.common.convention.errorcode.BaseErrorCode;
+import org.example.project.common.convention.errorcode.IErrorCode;
 
 /**
- * 抽象项目中三类异常体系，客户端异常、服务端异常以及远程服务调用异常
+ * 客户端异常
  * 公众号：马丁玩编程，回复：加群，添加马哥微信（备注：link）获取项目资料
- *
- * @see ClientException
- * @see ServiceException
- * @see RemoteException
  */
-@Getter
-public abstract class AbstractException extends RuntimeException {
+public class ClientException extends AbstractException {
 
-    public final String errorCode;
+    public ClientException(IErrorCode errorCode) {
+        this(null, null, errorCode);
+    }
 
-    public final String errorMessage;
+    public ClientException(String message) {
+        this(message, null, BaseErrorCode.CLIENT_ERROR);
+    }
 
-    public AbstractException(String message, Throwable throwable, IErrorCode errorCode) {
-        super(message, throwable);
-        this.errorCode = errorCode.code();
-        this.errorMessage = Optional.ofNullable(StringUtils.hasLength(message) ? message : null).orElse(errorCode.message());
+    public ClientException(String message, IErrorCode errorCode) {
+        this(message, null, errorCode);
+    }
+
+    public ClientException(String message, Throwable throwable, IErrorCode errorCode) {
+        super(message, throwable, errorCode);
+    }
+
+    @Override
+    public String toString() {
+        return "ClientException{" +
+                "code='" + errorCode + "'," +
+                "message='" + errorMessage + "'" +
+                '}';
     }
 }

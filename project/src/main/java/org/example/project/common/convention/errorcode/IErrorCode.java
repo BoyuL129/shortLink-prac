@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.example.admin.common.convention.errorcode;
+package org.example.project.common.convention.errorcode;
 
 /**
  * 平台错误码

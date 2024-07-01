@@ -2,16 +2,17 @@ package org.example.admin.dao.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.admin.common.database.BaseDO;
 
 @Data
 @TableName("t_group")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GroupDO {
+public class GroupDO extends BaseDO {
 
     /**
      * id
