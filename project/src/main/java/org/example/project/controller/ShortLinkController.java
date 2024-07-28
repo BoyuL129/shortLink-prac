@@ -1,44 +1,47 @@
 package org.example.project.controller;
 
-import cn.hutool.http.HttpRequest;
-import cn.hutool.http.HttpResponse;
-import cn.hutool.http.HttpUtil;
-import com.alibaba.fastjson2.JSON;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.example.project.common.convention.result.Result;
 import org.example.project.common.convention.result.Results;
 import org.example.project.dto.req.ShortLinkCreateReqDTO;
+import org.example.project.dto.req.ShortLinkUpdateReqDTO;
 import org.example.project.dto.res.ShortLinkCreateResDTO;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.example.project.service.ShortLinkService;
+import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController
 public class ShortLinkController {
+
+    private final ShortLinkService shortLinkService;
+
+
+    /**
+     * 短链接跳转原始链接
+     */
+    @GetMapping("/{short-uri}")
+    public void restoreUrl(@PathVariable("short-uri") String shortUri, ServletRequest request, ServletResponse response) {
+        shortLinkService.restoreUrl(shortUri, request, response);
+    }
 
     /**
      * 创建短链接
      */
-    @PostMapping("/api/short-link/admin/v1/create")
+    @PostMapping("/api/short-link/v1/create")
     public Result<ShortLinkCreateResDTO> createShortLink(@RequestBody ShortLinkCreateReqDTO requestParam) {
-        HttpRequest httpRequest = HttpUtil.createPost("http://127.0.0.1:8001/api/short-link/v1/create").body(JSON.toJSONString(requestParam));
-        HttpResponse execute = httpRequest.execute();
-        return Results.success(JSON.parseObject(execute.body(), ShortLinkCreateResDTO.class));
+        return Results.success(shortLinkService.createShortLink(requestParam));
     }
 
-//    /**
-//     * 分页查询短链接
-//     */
-//    @GetMapping("/api/short-link/admin/v1/page")
-//    public Result<IPage<ShortLinkPageResDTO>> pageShortLink(ShortLinkPageReqDTO requestParam) {
-//        Map<String, Object> requestMap = new HashMap<>();
-//        requestMap.put("gid", requestParam.getGid());
-//        requestMap.put("current", requestParam.getCurrent());
-//        requestMap.put("size", requestParam.getSize());
-//        String actualUrl = HttpUtil.get("http://127.0.0.1:8001/api/short-link/v1/page", requestMap);
-//        Type type = new TypeReference<Result<IPage<ShortLinkPageRespDTO>>>() {
-//        }.getType();
-//        return JSON.parseObject(actualUrl, type);
-//    }
+    /**
+     * 修改短链接
+     */
+    @PostMapping("/api/short-link/v1/update")
+    public Result<Void> updateShortLink(@RequestBody ShortLinkUpdateReqDTO requestParam) {
+        shortLinkService.updateShortLink(requestParam);
+        return Results.success();
+    }
 }
 
 ///**
